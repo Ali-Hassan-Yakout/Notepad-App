@@ -57,24 +57,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 10),
-                          if (cubit.imageLink.isEmpty)
-                            InkWell(
-                              borderRadius: BorderRadius.circular(30),
-                              onTap: () => cubit.pickImage(),
-                              child: const CircleAvatar(
-                                radius: 30,
-                                backgroundColor: secondColor,
-                                child: Icon(
-                                  Icons.person,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            )
-                          else
-                            BlocBuilder<ProfileScreenCubit, ProfileScreenState>(
-                              buildWhen: (previous, current) =>
-                                  current is LoadingChange,
-                              builder: (context, state) {
+                          BlocBuilder<ProfileScreenCubit, ProfileScreenState>(
+                            buildWhen: (previous, current) => current is LoadingChange,
+                            builder: (context, state) {
+                              if (cubit.imageLink.isEmpty) {
+                                return InkWell(
+                                  borderRadius: BorderRadius.circular(30),
+                                  onTap: () => cubit.pickImage(),
+                                  child: const CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: secondColor,
+                                    child: Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                );
+                              } else {
                                 return Stack(
                                   alignment: Alignment.center,
                                   children: [
@@ -96,8 +95,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     )
                                   ],
                                 );
-                              },
-                            ),
+                              }
+                            },
+                          ),
                           const SizedBox(height: 10),
                           const Text(
                             "Profile",
